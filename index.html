@@ -5,17 +5,17 @@
 <title>Happy Birthday</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 
 body{
   height:100vh;
-  background:#000;
+  background:radial-gradient(circle at top,#0b0b0f,#000 60%);
   overflow:hidden;
-  color:#fff;
   font-family:'Inter',sans-serif;
+  color:#fff;
 }
 
 /* STARFIELD */
@@ -25,7 +25,7 @@ canvas{
   z-index:0;
 }
 
-/* CONTENT */
+/* CENTER */
 .container{
   position:relative;
   z-index:2;
@@ -33,61 +33,84 @@ canvas{
   display:flex;
   align-items:center;
   justify-content:center;
-  text-align:center;
-  padding:30px;
+  padding:24px;
 }
 
+/* GLASS CARD */
 .card{
   max-width:720px;
-  animation:fadeUp 2s ease forwards;
+  padding:48px 42px;
+  border-radius:22px;
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,0.15);
+  box-shadow:0 30px 80px rgba(0,0,0,0.7);
+  animation:fadeUp 1.8s ease forwards;
+  position:relative;
+}
+
+/* SUBTLE GLOW */
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:22px;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.25),transparent);
+  opacity:0.4;
+  pointer-events:none;
 }
 
 h1{
   font-family:'Playfair Display',serif;
   font-size:3rem;
   letter-spacing:1px;
-  margin-bottom:20px;
+  margin-bottom:22px;
 }
 
 .divider{
-  width:90px;
+  width:96px;
   height:2px;
-  margin:25px auto;
+  margin:26px auto;
   background:linear-gradient(90deg,transparent,#fff,transparent);
+  opacity:0.85;
 }
 
 p{
-  font-size:1.1rem;
+  font-size:1.12rem;
   line-height:1.9;
-  color:#dcdcdc;
+  color:#e0e0e0;
   min-height:120px;
 }
 
 .signature{
-  margin-top:40px;
+  margin-top:44px;
   font-size:0.9rem;
   letter-spacing:1px;
-  color:#aaa;
+  color:#bcbcbc;
 }
 
+/* ANIMATIONS */
 @keyframes fadeUp{
-  from{opacity:0;transform:translateY(40px)}
+  from{opacity:0;transform:translateY(36px)}
   to{opacity:1;transform:translateY(0)}
 }
 
-/* TAP EFFECT */
+/* TAP SHOCKWAVE */
 .ripple{
   position:absolute;
+  width:40px;
+  height:40px;
   border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,0.35),transparent 60%);
   transform:scale(0);
-  animation:ripple 800ms ease-out;
-  background:rgba(255,255,255,0.25);
+  animation:ripple 900ms ease-out;
   pointer-events:none;
 }
 
 @keyframes ripple{
   to{
-    transform:scale(6);
+    transform:scale(7);
     opacity:0;
   }
 }
@@ -107,9 +130,9 @@ p{
 </div>
 
 <script>
-// ===== STARFIELD =====
-const canvas = document.getElementById("stars");
-const ctx = canvas.getContext("2d");
+// ===== STARFIELD (SMOOTHER) =====
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
 let w,h,stars=[];
 
 function resize(){
@@ -119,56 +142,53 @@ function resize(){
 window.addEventListener("resize",resize);
 resize();
 
-for(let i=0;i<120;i++){
-  stars.push({
-    x:Math.random()*w,
-    y:Math.random()*h,
-    r:Math.random()*1.5,
-    s:Math.random()*0.5+0.2
-  });
-}
+stars=Array.from({length:90},()=>({
+  x:Math.random()*w,
+  y:Math.random()*h,
+  r:Math.random()*1.4+0.3,
+  s:Math.random()*0.35+0.15
+}));
 
-function drawStars(){
+function animate(){
   ctx.clearRect(0,0,w,h);
-  ctx.fillStyle="white";
-  stars.forEach(st=>{
-    ctx.globalAlpha=Math.random();
+  ctx.fillStyle="#fff";
+  stars.forEach(s=>{
+    ctx.globalAlpha=Math.random()*0.6+0.2;
     ctx.beginPath();
-    ctx.arc(st.x,st.y,st.r,0,Math.PI*2);
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
     ctx.fill();
-    st.y+=st.s;
-    if(st.y>h){st.y=0;st.x=Math.random()*w}
+    s.y+=s.s;
+    if(s.y>h){s.y=0;s.x=Math.random()*w}
   });
-  requestAnimationFrame(drawStars);
+  requestAnimationFrame(animate);
 }
-drawStars();
+animate();
 
 // ===== TYPEWRITER =====
-const message = 
-"Wishing you a year filled with clarity, confidence, and moments that quietly matter.\n\n" +
-"You have a natural way of leaving a good impression without trying — and that’s rare.";
+const message =
+"Wishing you a year filled with clarity, confidence, and moments that quietly matter.\n\n"+
+"You have a natural way of leaving a good impression without trying — and that stands out.";
 
 let i=0;
-const textEl=document.getElementById("text");
+const el=document.getElementById("text");
 
 function type(){
   if(i<message.length){
-    textEl.innerHTML += message[i]==="\n" ? "<br><br>" : message[i];
+    el.innerHTML+=message[i]==="\n"?"<br><br>":message[i];
     i++;
-    setTimeout(type,35);
+    setTimeout(type,34);
   }
 }
 setTimeout(type,900);
 
-// ===== TAP / CLICK EFFECT =====
+// ===== TAP EFFECT =====
 document.addEventListener("click",e=>{
   const r=document.createElement("span");
   r.className="ripple";
   r.style.left=e.clientX+"px";
   r.style.top=e.clientY+"px";
-  r.style.width=r.style.height="40px";
   document.body.appendChild(r);
-  setTimeout(()=>r.remove(),800);
+  setTimeout(()=>r.remove(),900);
 });
 </script>
 
