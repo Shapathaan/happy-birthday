@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday Kajol</title>
+<title>Happy Birthday KAJOL</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -17,18 +17,16 @@ body{
   overflow:hidden;
 }
 
-/* ===== FLOATING TEDDY BEARS ===== */
+/* ================= TEDDY BEARS ================= */
 .teddy{
   position:fixed;
   width:90px;
   height:90px;
   background:#ffb6d9;
   border-radius:45% 45% 50% 50%;
-  opacity:0.28;
-  filter:blur(0.5px);
-  animation:floatY 18s infinite ease-in-out alternate,
-             floatX 22s infinite ease-in-out alternate;
-  z-index:1;
+  opacity:0.35;
+  animation:teddyFloat 12s infinite ease-in-out;
+  z-index:0;
 }
 
 .teddy::before,.teddy::after{
@@ -43,36 +41,33 @@ body{
 .teddy::after{right:8px}
 
 .t1{top:10%;left:6%}
-.t2{top:65%;left:12%}
-.t3{top:18%;right:8%}
-.t4{bottom:8%;right:14%}
+.t2{top:65%;left:12%;animation-duration:15s}
+.t3{top:18%;right:8%;animation-duration:18s}
+.t4{bottom:8%;right:14%;animation-duration:20s}
 
-@keyframes floatY{
-  from{transform:translateY(0)}
-  to{transform:translateY(50px)}
-}
-@keyframes floatX{
-  from{margin-left:0}
-  to{margin-left:30px}
+@keyframes teddyFloat{
+  0%{transform:translate(0,0) rotate(-3deg)}
+  50%{transform:translate(35px,-45px) rotate(4deg)}
+  100%{transform:translate(0,0) rotate(-3deg)}
 }
 
-/* ===== HEART SPARKLES ===== */
+/* ================= HEART SHOWER ================= */
 .heart{
   position:fixed;
-  font-size:18px;
+  bottom:-30px;
+  font-size:20px;
   color:#ff8fc4;
-  opacity:0;
-  animation:heartFloat 7s infinite ease-in;
+  animation:heartRise 6s linear infinite;
   z-index:1;
 }
 
-@keyframes heartFloat{
-  0%{transform:translateY(60px) scale(0.6);opacity:0}
-  20%{opacity:0.9}
-  100%{transform:translateY(-160px) scale(1.3);opacity:0}
+@keyframes heartRise{
+  0%{transform:translateY(0) scale(0.7);opacity:0}
+  20%{opacity:1}
+  100%{transform:translateY(-110vh) scale(1.3);opacity:0}
 }
 
-/* ===== CENTER CARD ===== */
+/* ================= CENTER CARD ================= */
 .container{
   position:relative;
   z-index:2;
@@ -99,19 +94,16 @@ body{
   to{opacity:1;transform:translateY(0)}
 }
 
-/* ===== PHOTO ===== */
+/* ================= PHOTO ================= */
 .photo-wrap{
   width:170px;
   height:170px;
   margin:0 auto 26px;
   border-radius:50%;
-  overflow:hidden;
   position:relative;
-  animation:photoIn 2s ease forwards,
-             glowPulse 4s infinite ease-in-out;
-  box-shadow:
-    0 0 0 6px rgba(255,182,213,0.65),
-    0 0 35px rgba(255,105,180,0.45);
+  overflow:hidden;
+  background:#fff;
+  animation:photoIn 1.8s ease forwards, glowPulse 3.5s infinite ease-in-out;
 }
 
 @keyframes photoIn{
@@ -120,24 +112,26 @@ body{
 }
 
 @keyframes glowPulse{
-  0%,100%{
-    box-shadow:
-      0 0 0 6px rgba(255,182,213,0.6),
-      0 0 35px rgba(255,105,180,0.45);
-  }
-  50%{
-    box-shadow:
-      0 0 0 8px rgba(255,182,213,0.8),
-      0 0 55px rgba(255,105,180,0.65);
-  }
+  0%,100%{box-shadow:0 0 25px rgba(255,105,180,0.35)}
+  50%{box-shadow:0 0 55px rgba(255,105,180,0.7)}
+}
+
+.photo-wrap::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  box-shadow:
+    inset 0 0 0 4px rgba(255,182,213,0.95),
+    0 0 35px rgba(255,105,180,0.55);
 }
 
 .photo-wrap::after{
   content:"";
   position:absolute;
-  inset:-40%;
+  inset:-60%;
   background:linear-gradient(120deg,transparent,rgba(255,255,255,0.7),transparent);
-  animation:shine 5s infinite;
+  animation:shine 4s infinite;
 }
 
 @keyframes shine{
@@ -149,21 +143,40 @@ body{
   width:100%;
   height:100%;
   object-fit:cover;
-  object-position:center top; /* PORTRAIT FIX */
-  transform:scale(0.92);
+  object-position:center top;
 }
 
-/* ===== TEXT ===== */
+/* ================= TEXT ================= */
 h1{
   font-family:'Playfair Display',serif;
   font-size:3rem;
   color:#c94b82;
 }
 
+/* 🔥 KAJOL NAME – BIG, BOLD, GLOWING */
 .name{
-  font-size:1.45rem;
-  margin:10px 0 18px;
-  color:#8a3d63;
+  font-size:2.2rem;
+  font-weight:700;
+  letter-spacing:4px;
+  margin:12px 0 20px;
+  color:#ff4fa0;
+  text-shadow:
+    0 0 8px rgba(255,79,160,0.6),
+    0 0 18px rgba(255,140,200,0.7);
+  animation:nameGlow 3s infinite ease-in-out;
+}
+
+@keyframes nameGlow{
+  0%,100%{
+    text-shadow:
+      0 0 8px rgba(255,79,160,0.5),
+      0 0 18px rgba(255,140,200,0.6);
+  }
+  50%{
+    text-shadow:
+      0 0 16px rgba(255,79,160,0.9),
+      0 0 32px rgba(255,140,200,1);
+  }
 }
 
 .divider{
@@ -183,6 +196,7 @@ p{
 
 <body>
 
+<!-- TEDDIES -->
 <div class="teddy t1"></div>
 <div class="teddy t2"></div>
 <div class="teddy t3"></div>
@@ -192,11 +206,11 @@ p{
   <div class="card">
 
     <div class="photo-wrap">
-      <img src="kajol.jpg" alt="Kajol">
+      <img src="kajol.jpg" alt="KAJOL">
     </div>
 
     <h1>Happy Birthday</h1>
-    <div class="name">Kajol</div>
+    <div class="name">KAJOL</div>
 
     <div class="divider"></div>
 
@@ -214,14 +228,13 @@ p{
 </div>
 
 <script>
-// HEART PARTICLES (VISIBLE & SMOOTH)
-for(let i=0;i<12;i++){
+/* HEART SHOWER */
+for(let i=0;i<14;i++){
   const h=document.createElement("div");
   h.className="heart";
   h.innerHTML="🤍";
   h.style.left=Math.random()*100+"vw";
-  h.style.animationDelay=(Math.random()*6)+"s";
-  h.style.fontSize=(14+Math.random()*12)+"px";
+  h.style.animationDelay=(Math.random()*5)+"s";
   document.body.appendChild(h);
 }
 </script>
