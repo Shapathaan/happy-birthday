@@ -24,9 +24,11 @@ body{
   height:90px;
   background:#ffb6d9;
   border-radius:45% 45% 50% 50%;
-  opacity:0.18;
-  filter:blur(1px);
-  animation:float 16s infinite ease-in-out alternate;
+  opacity:0.28;
+  filter:blur(0.5px);
+  animation:floatY 18s infinite ease-in-out alternate,
+             floatX 22s infinite ease-in-out alternate;
+  z-index:1;
 }
 
 .teddy::before,.teddy::after{
@@ -40,29 +42,34 @@ body{
 .teddy::before{left:8px}
 .teddy::after{right:8px}
 
-.t1{top:8%;left:6%}
-.t2{top:65%;left:10%;animation-duration:20s}
-.t3{top:15%;right:8%;animation-duration:22s}
-.t4{bottom:8%;right:14%;animation-duration:24s}
+.t1{top:10%;left:6%}
+.t2{top:65%;left:12%}
+.t3{top:18%;right:8%}
+.t4{bottom:8%;right:14%}
 
-@keyframes float{
+@keyframes floatY{
   from{transform:translateY(0)}
-  to{transform:translateY(45px)}
+  to{transform:translateY(50px)}
+}
+@keyframes floatX{
+  from{margin-left:0}
+  to{margin-left:30px}
 }
 
 /* ===== HEART SPARKLES ===== */
 .heart{
   position:fixed;
-  font-size:14px;
-  color:#ff9ecb;
+  font-size:18px;
+  color:#ff8fc4;
   opacity:0;
-  animation:hearts 6s infinite ease-in;
+  animation:heartFloat 7s infinite ease-in;
+  z-index:1;
 }
 
-@keyframes hearts{
-  0%{transform:translateY(40px) scale(0.6);opacity:0}
-  20%{opacity:0.8}
-  100%{transform:translateY(-120px) scale(1.2);opacity:0}
+@keyframes heartFloat{
+  0%{transform:translateY(60px) scale(0.6);opacity:0}
+  20%{opacity:0.9}
+  100%{transform:translateY(-160px) scale(1.3);opacity:0}
 }
 
 /* ===== CENTER CARD ===== */
@@ -80,7 +87,7 @@ body{
   max-width:760px;
   padding:46px;
   border-radius:30px;
-  background:rgba(255,255,255,0.72);
+  background:rgba(255,255,255,0.75);
   backdrop-filter:blur(18px);
   box-shadow:0 35px 80px rgba(255,105,180,0.28);
   text-align:center;
@@ -100,15 +107,29 @@ body{
   border-radius:50%;
   overflow:hidden;
   position:relative;
+  animation:photoIn 2s ease forwards,
+             glowPulse 4s infinite ease-in-out;
   box-shadow:
-    0 0 0 6px rgba(255,182,213,0.6),
-    0 0 40px rgba(255,105,180,0.45);
-  animation:photoIn 2.2s ease forwards;
+    0 0 0 6px rgba(255,182,213,0.65),
+    0 0 35px rgba(255,105,180,0.45);
 }
 
 @keyframes photoIn{
-  from{opacity:0;transform:scale(0.85)}
+  from{opacity:0;transform:scale(0.88)}
   to{opacity:1;transform:scale(1)}
+}
+
+@keyframes glowPulse{
+  0%,100%{
+    box-shadow:
+      0 0 0 6px rgba(255,182,213,0.6),
+      0 0 35px rgba(255,105,180,0.45);
+  }
+  50%{
+    box-shadow:
+      0 0 0 8px rgba(255,182,213,0.8),
+      0 0 55px rgba(255,105,180,0.65);
+  }
 }
 
 .photo-wrap::after{
@@ -116,7 +137,7 @@ body{
   position:absolute;
   inset:-40%;
   background:linear-gradient(120deg,transparent,rgba(255,255,255,0.7),transparent);
-  animation:shine 4.5s infinite;
+  animation:shine 5s infinite;
 }
 
 @keyframes shine{
@@ -128,6 +149,8 @@ body{
   width:100%;
   height:100%;
   object-fit:cover;
+  object-position:center top; /* PORTRAIT FIX */
+  transform:scale(0.92);
 }
 
 /* ===== TEXT ===== */
@@ -191,14 +214,14 @@ p{
 </div>
 
 <script>
-// HEART PARTICLES
-for(let i=0;i<10;i++){
+// HEART PARTICLES (VISIBLE & SMOOTH)
+for(let i=0;i<12;i++){
   const h=document.createElement("div");
   h.className="heart";
   h.innerHTML="🤍";
   h.style.left=Math.random()*100+"vw";
-  h.style.animationDelay=(Math.random()*5)+"s";
-  h.style.fontSize=(12+Math.random()*10)+"px";
+  h.style.animationDelay=(Math.random()*6)+"s";
+  h.style.fontSize=(14+Math.random()*12)+"px";
   document.body.appendChild(h);
 }
 </script>
